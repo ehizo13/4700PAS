@@ -36,20 +36,20 @@ Reg.n = 1;
 mu{1} = ones(nx{1},ny{1})*c_mu_0;
 epi{1} = ones(nx{1},ny{1})*c_eps_0; 
 %DiElectic inclusion addition
-epi{1}(125:150,55:95)= c_eps_0*11.3; %This is the code for inclusion when
+% epi{1}(125:150,55:95)= c_eps_0*11.3; %This is the code for inclusion when
 %commented out it will cause the simulation to behave as if the material is
 %just free space everywhere with a relative permittivity of 11.3
 %Grating Multiple dielectric blocks with spacing
 grating_width = 10; %Width of block
 grating_spacing = 20; %Spacing between bars
-num_grating = 5; %number of grating bars
+num_grating = 3; %number of grating bars
 
 %Create a grating by adding more inclusions
-for i = 1:num_grating
-    x_start = 100 + (i-1) * (grating_width + grating_spacing);
-    x_end = x_start + grating_width;
-    epi{1}(x_start:x_end, 55:95) = c_eps_0 *11.3;
-end
+% for i = 1:num_grating
+%     x_start = 100 + (i-1) * (grating_width + grating_spacing);
+%     x_end = x_start + grating_width;
+%     epi{1}(x_start:x_end, 55:95) = c_eps_0 *11.3;
+% end
 
 %Adding/ Including randomly placed scatterers
 scattnum = 20; %Number of scatterers
@@ -81,8 +81,8 @@ Plot.pv = [0 0 90];
 Plot.reglim = [0 xMax{1} 0 yMax];
 %Define wave source parameters
 bc{1}.NumS = 1; %Number of sources in the sim
-%bc{1}.s(1).xpos = nx{1}/(4) + 1; %Source position
-bc{1}.s(1).xpos = nx{1}/(2); %Modified Source position
+bc{1}.s(1).xpos = nx{1}/(4) + 1; %Source position
+%bc{1}.s(1).xpos = nx{1}/(2); %Modified Source position
 bc{1}.s(1).type = 'ss'; %Soft Source
 bc{1}.s(1).fct = @PlaneWaveBC; %Function that defines the plane wave
 % mag = -1/c_eta_0;
@@ -118,7 +118,7 @@ Reg.n  = 1;
 Reg.xoff{1} = 0;
 Reg.yoff{1} = 0;
 %Run the FDTD sim using the Yee algorithm
-%RunYeeReg
+RunYeeReg
 figure;
 imagesc(epi{1}');
 colorbar;
